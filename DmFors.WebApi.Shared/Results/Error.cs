@@ -34,21 +34,21 @@ public record Error(string Code, string Message, ErrorType Type, object? Meta = 
 
     #region General
 
-    public static Error NotFound(string code, string message) => new(code, message, ErrorType.NotFound);
+    public static Error NotFound(string message, string? code = null) => new(code ?? "not.found", message, ErrorType.NotFound);
 
-    public static Error Conflict(string code, string message) => new(code, message, ErrorType.Conflict);
+    public static Error Conflict(string message, string? code = null) => new(code ?? "conflict", message, ErrorType.Conflict);
 
-    public static Error Failure(string code, string message) => new(code, message, ErrorType.Failure);
+    public static Error Failure(string message, string? code = null) => new(code ?? "failure", message, ErrorType.Failure);
 
-    public static Error Validation(string invalidField, string code, string message) => new(
-        code,
+    public static Error Validation(string invalidField, string message, string? code = null) => new(
+        code ?? "validation",
         message,
         ErrorType.Validation,
         new Dictionary<string, string> { ["invalidField"] = invalidField });
 
-    public static Error Authentication(string code, string message) => new(code, message, ErrorType.Authentication);
+    public static Error Authentication(string message, string? code = null) => new(code ?? "authentication", message, ErrorType.Authentication);
 
-    public static Error Authorization(string code, string message) => new(code, message, ErrorType.Authorization);
+    public static Error Authorization(string message, string? code = null) => new(code ?? "authorization", message, ErrorType.Authorization);
 
     #endregion
 }
