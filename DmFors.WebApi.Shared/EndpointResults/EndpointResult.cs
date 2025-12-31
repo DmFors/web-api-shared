@@ -23,6 +23,16 @@ public class EndpointResult<TValue> : IResult
     {
         _result = result.IsSuccess ? new SuccessResult<TValue>() : new ErrorsResult(result.Error);
     }
+    
+    public EndpointResult(TValue value)
+    {
+        _result = new SuccessResult<TValue>(value);
+    }
+    
+    public EndpointResult(Errors errors)
+    {
+        _result = new ErrorsResult(errors);
+    }
 
     public Task ExecuteAsync(HttpContext httpContext) => _result.ExecuteAsync(httpContext);
     
@@ -31,4 +41,8 @@ public class EndpointResult<TValue> : IResult
     public static implicit operator EndpointResult<TValue>(Result<TValue, Errors> result) => new(result);
     
     public static implicit operator EndpointResult<TValue>(UnitResult<Errors> result) => new(result);
+    
+    public static implicit operator EndpointResult<TValue>(TValue value) => new(value);
+    
+    public static implicit operator EndpointResult<TValue>(Errors errors) => new(errors);
 }
