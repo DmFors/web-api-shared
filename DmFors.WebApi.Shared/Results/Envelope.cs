@@ -5,14 +5,14 @@ namespace DmFors.WebApi.Shared.Results;
 
 public record Envelope<T>
 {
-    protected Envelope(T? value, Errors? errors)
+    protected Envelope(T? data, Errors? errors)
     {
-        Value = value;
+        Data = data;
         Errors = errors;
         TimeGenerated = DateTime.UtcNow;
     }
 
-    public T? Value { get; }
+    public T? Data { get; }
 
     public Errors? Errors { get; }
 
@@ -30,12 +30,12 @@ public record Envelope<T>
 
 public record Envelope : Envelope<object>
 {
-    private Envelope(object? value, Errors? errors) : base(value, errors)
+    private Envelope(object? data, Errors? errors) : base(data, errors)
     {
     }
     
-    public static new Envelope Ok(object? value = default) => new(value, null);
+    public new static Envelope Ok(object? data = default) => new(data, null);
     
-    public static new Envelope Error(Errors? errors = null) => new(default, errors);
+    public new static Envelope Error(Errors? errors = null) => new(null, errors);
 
 }
